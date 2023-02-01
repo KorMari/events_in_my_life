@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // some comment
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             setNumberOfMonth(savedInstanceState.getInt("numberOfMonth"));
