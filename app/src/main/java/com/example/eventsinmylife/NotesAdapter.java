@@ -53,7 +53,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
 //                colorRes = R.color.gray;
                 break;
             default:
-                eventText = "ДА";
+                eventText = "ГС";
 //                colorRes = R.color.sunshain;
                 break;
         }

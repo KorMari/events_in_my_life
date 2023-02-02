@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:hint="Введите день"
+        android:hint="@string/hint_input_date"
         android:inputType="number"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:hint="Введите месяц"
+        android:hint="@string/hint_input_month"
         android:inputType="number"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:hint="Введите имя человека"
+        android:hint="@string/hint_input_person_name"
         android:inputType="textPersonName"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
                 android:background="@color/gray"
 
                 android:padding="8dp"
-                android:text="ДП"
+                android:text="@string/death_day"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
@@ -71,7 +71,7 @@
                 android:background="@color/red"
                 android:padding="8dp"
                 android:checked="true"
-                android:text="ДР"
+                android:text="@string/birthday"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/sunshain"
                 android:padding="8dp"
-                android:text="ДА"
+                android:text="@string/wedding_day"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:background="@color/teal_700"
-            android:text="Сохранить"
+            android:text="@string/save"
             app:layout_constraintEnd_toEndOf="parent"
 
             app:layout_constraintStart_toStartOf="parent"

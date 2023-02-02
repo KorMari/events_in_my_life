@@ -1,7 +1,14 @@
 <resources>
     <string name="app_name">Events in my life</string>
     <string name="january">Январь</string>
-<string-array name="months">
+    <string name="hint_input_date">Введите день</string>
+    <string name="hint_input_month">Введите месяц</string>
+    <string name="hint_input_person_name">Введите имя человека</string>
+    <string name="death_day">ДП</string>
+    <string name="birthday">ДР</string>
+    <string name="wedding_day">ГС</string>
+    <string name="save">Сохранить</string>
+    <string-array name="months">
     <item>Январь</item>
     <item>Февраль</item>
     <item>Март</item>

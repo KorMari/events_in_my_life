@@ -103,8 +103,6 @@ thread.start();
                 if (getNumberOfMonth() > 0) {
                     setNumberOfMonth(getNumberOfMonth() - 1);
                     changeMonths();
-                } else {
-                    changeMonths();
                 }
 
             }
@@ -115,8 +113,6 @@ thread.start();
             public void onClick(View view) {
                 if (getNumberOfMonth() < 11) {
                     setNumberOfMonth(getNumberOfMonth() + 1);
-                    changeMonths();
-                } else {
                     changeMonths();
                 }
 
@@ -158,53 +154,13 @@ thread.start();
 
 
     private void changeMonths() {
-        setNumberOfMonth(getNumberOfMonth());
-        textViewMonth.setText(months[numberOfMonth]);
+
+        textViewMonth.setText(months[getNumberOfMonth()]);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                List<Note> notesDependenceFromMonth;
-                switch (numberOfMonth) {
-                    case 0:
-                        notesDependenceFromMonth = noteDatabase.notesDao().getJanuary();
-                        break;
-                    case 1:
-                        notesDependenceFromMonth = noteDatabase.notesDao().getFebruary();
-                        break;
-                    case 2:
-                        notesDependenceFromMonth = noteDatabase.notesDao().getMarch();
-                        break;
-                    case 3:
-                        notesDependenceFromMonth = noteDatabase.notesDao().getApril();
-                        break;
-                    case 4:
-                        notesDependenceFromMonth = noteDatabase.notesDao().getMay();
-                        break;
-                    case 5:
-                        notesDependenceFromMonth = noteDatabase.notesDao().getJune();
-                        break;
-                    case 6:
-                        notesDependenceFromMonth = noteDatabase.notesDao().getJuly();
-                        break;
-                    case 7:
-                        notesDependenceFromMonth = noteDatabase.notesDao().getAugust();
-                        break;
-                    case 8:
-                        notesDependenceFromMonth = noteDatabase.notesDao().getSeptember();
-                        break;
-                    case 9:
-                        notesDependenceFromMonth = noteDatabase.notesDao().getOctober();
-                        break;
-                    case 10:
-                        notesDependenceFromMonth = noteDatabase.notesDao().getNovember();
-                        break;
-                    case 11:
-                        notesDependenceFromMonth = noteDatabase.notesDao().getDecember();
-                        break;
-                    default:
-                        notesDependenceFromMonth = noteDatabase.notesDao().getJanuary();
-                        break;
-                }
+                List<Note> notesDependenceFromMonth = noteDatabase.notesDao().getNotes(getNumberOfMonth());;
+
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
