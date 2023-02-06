@@ -65,14 +65,14 @@ private Handler handler = new Handler(Looper.getMainLooper());
         String personName = editTextPersonName.getText().toString().trim();
 
         if (numberOfDay.isEmpty() || numberOfMonth.isEmpty() || personName.isEmpty()) {
-            Toast.makeText(this, "Все поля должны быть заполнены!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.must_be_filled, Toast.LENGTH_SHORT).show();
         } else {
             String date = "2020-"  + numberOfMonth + "-" + numberOfDay;
 
             try {
                 LocalDate.parse(date, DateTimeFormatter.ofPattern("uuuu-M-d").withResolverStyle(ResolverStyle.STRICT));
             } catch (Exception e) {
-                Toast.makeText(this, "Введеной даты не существует!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.does_not_exist, Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -90,12 +90,16 @@ private Handler handler = new Handler(Looper.getMainLooper());
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            finish();
+//                            finish();
+                            Intent intent = MainActivity.newIntent(AddNewNoteActivity.this, month);
+                            intent.putExtra("numberOfMonth", month - 1);
+                            startActivity(intent);
                         }
                     });
                 }
             });
             thread.start();
+
         }
     }
 

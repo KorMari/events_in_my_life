@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,11 +44,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        int month = intent.getIntExtra("numberOfMonth",0);
+
         if (savedInstanceState != null) {
             setNumberOfMonth(savedInstanceState.getInt("numberOfMonth"));
 
         } else {
-            setNumberOfMonth(0);
+            setNumberOfMonth(month);
         }
         setContentView(R.layout.activity_main);
         initViews();
@@ -159,7 +163,7 @@ thread.start();
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                List<Note> notesDependenceFromMonth = noteDatabase.notesDao().getNotes(getNumberOfMonth());;
+                List<Note> notesDependenceFromMonth = noteDatabase.notesDao().getNotes(getNumberOfMonth());
 
                 handler.post(new Runnable() {
                     @Override
@@ -176,5 +180,11 @@ thread.start();
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("numberOfMonth", getNumberOfMonth());
+    }
+
+    public static Intent newIntent (Context context, int numberOfMonth){
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra("numberOfMonth", numberOfMonth);
+        return intent;
     }
 }
