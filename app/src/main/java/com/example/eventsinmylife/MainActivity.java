@@ -2,6 +2,7 @@ package com.example.eventsinmylife;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private NoteDatabase noteDatabase;
     private String[] months;
     private int numberOfMonth;
+    private  MainViewModel mainViewModel;
 
     public int getNumberOfMonth() {
         return numberOfMonth;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         Intent intent = getIntent();
         int month = intent.getIntExtra("numberOfMonth",0);
 
@@ -69,20 +72,9 @@ public class MainActivity extends AppCompatActivity {
                 int position = viewHolder.getAdapterPosition();
 
                 Note note = notesAdapter.getNotes().get(position);
-
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        noteDatabase.notesDao().remove(note.getId());
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
+mainViewModel.remove(note);
                                 changeMonths();
-                            }
-                        });
-                    }
-                });
-thread.start();
+
             }
         });
         itemTouchHelper.attachToRecyclerView(recyclerViewForNotes);

@@ -7,17 +7,19 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+
 @Dao
 public interface NotesDao {
 
-    @Query("SELECT * FROM notes WHERE month = :idMonth + 1")
-    List<Note>  getNotes(int idMonth);
+    @Query("SELECT * FROM notes WHERE month = :idMonth + 1 ORDER BY 2")
+    List<Note> getNotes(int idMonth);
 
     @Insert
-    void  add (Note note);
+    Completable add (Note note);
 
     @Query("DELETE FROM notes WHERE id = :id")
-    void  remove (int id);
+    Completable  remove (int id);
 
 
 }

@@ -1,17 +1,16 @@
 package com.example.eventsinmylife;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.time.LocalDate;
@@ -26,17 +25,26 @@ public class AddNewNoteActivity extends AppCompatActivity {
     private RadioButton radioButtonPriorityBirthday;
     private RadioButton radioButtonPriorityDeath;
     private Button buttonSave;
-    private NoteDatabase noteDatabase;
-private Handler handler = new Handler(Looper.getMainLooper());
-
+private  AddNewViewModel addViewModel;
+private int openMonth;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_note);
+        addViewModel = new ViewModelProvider(this).get(AddNewViewModel.class);
+        addViewModel.getShouldCloseToScreen().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean shouldClose) {
+                if (shouldClose) {
+                    Intent intent = MainActivity.newIntent(AddNewNoteActivity.this, openMonth);
+                    intent.putExtra("numberOfMonth", openMonth - 1);
+                    startActivity(intent);
+                }
+            }
+        });
         initViews();
-        noteDatabase = NoteDatabase.getInstance(getApplication());
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,29 +86,14 @@ private Handler handler = new Handler(Looper.getMainLooper());
 
             int number = Integer.parseInt(numberOfDay);
            int  month = Integer.parseInt(numberOfMonth);
+           openMonth = month;
            int  priority = getPriority();
 
             Note note = new Note( number, month, priority, personName);
+addViewModel.saveNote(note);
 
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    noteDatabase.notesDao().add(note);
 
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-//                            finish();
-                            Intent intent = MainActivity.newIntent(AddNewNoteActivity.this, month);
-                            intent.putExtra("numberOfMonth", month - 1);
-                            startActivity(intent);
-                        }
-                    });
-                }
-            });
-            thread.start();
-
-        }
+                 }
     }
 
 
@@ -115,4 +108,6 @@ private Handler handler = new Handler(Looper.getMainLooper());
         }
         return priority;
     }
+
+
 }
