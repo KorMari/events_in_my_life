@@ -2,6 +2,7 @@ package com.example.eventsinmylife;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton floatingActionButton;
     private RecyclerView recyclerViewForNotes;
     private NotesAdapter notesAdapter;
-    private Handler handler = new Handler(Looper.getMainLooper());
-    private NoteDatabase noteDatabase;
     private String[] months;
     private int numberOfMonth;
     private  MainViewModel mainViewModel;
@@ -58,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_main);
         initViews();
-        noteDatabase = NoteDatabase.getInstance(getApplication());
         notesAdapter = new NotesAdapter();
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -152,20 +150,13 @@ mainViewModel.remove(note);
     private void changeMonths() {
 
         textViewMonth.setText(months[getNumberOfMonth()]);
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                List<Note> notesDependenceFromMonth = noteDatabase.notesDao().getNotes(getNumberOfMonth());
 
-                handler.post(new Runnable() {
+                mainViewModel.getNotes(getNumberOfMonth()).observe(MainActivity.this, new Observer<List<Note>>() {
                     @Override
-                    public void run() {
-                        notesAdapter.setNotes(notesDependenceFromMonth);
+                    public void onChanged(List<Note> notes) {
+                        notesAdapter.setNotes(notes);
                     }
                 });
-            }
-        });
-        thread.start();
     }
 
     @Override

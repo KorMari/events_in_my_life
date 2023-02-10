@@ -34,8 +34,8 @@ public class MainViewModel extends AndroidViewModel {
         super.onCleared();
         compositeDisposable.dispose();
     }
-//
-//    public LiveData <List<Note>> getNotes (int idMonth){
-//return notesDao.getNotes(idMonth);
-//    }
+
+    public LiveData <List<Note>> getNotes (int idMonth){
+return notesDao.getNotes(idMonth);
+    }
 }

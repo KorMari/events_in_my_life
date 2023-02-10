@@ -13,7 +13,7 @@ import io.reactivex.rxjava3.core.Completable;
 public interface NotesDao {
 
     @Query("SELECT * FROM notes WHERE month = :idMonth + 1 ORDER BY 2")
-    List<Note> getNotes(int idMonth);
+    LiveData<List<Note>> getNotes(int idMonth);
 
     @Insert
     Completable add (Note note);
