@@ -2,6 +2,7 @@ package com.example.eventsinmylife;
 
 import android.app.Application;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -12,6 +13,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AddNewViewModel extends AndroidViewModel {
@@ -35,6 +37,11 @@ public  void saveNote (Note note){
                 public void run() throws Throwable {
                     shouldCloseToScreen.setValue(true);
 
+                }
+            }, new Consumer<Throwable>() {
+                @Override
+                public void accept(Throwable throwable) throws Throwable {
+                    Log.d("AddNewNoteActivity", "Ошибка при добавлении заметки");
                 }
             });
     compositeDisposable.add(disposable);

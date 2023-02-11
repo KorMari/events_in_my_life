@@ -151,7 +151,8 @@ mainViewModel.remove(note);
 
         textViewMonth.setText(months[getNumberOfMonth()]);
 
-                mainViewModel.getNotes(getNumberOfMonth()).observe(MainActivity.this, new Observer<List<Note>>() {
+                mainViewModel.getNotes(getNumberOfMonth())
+                        .observe(MainActivity.this, new Observer<List<Note>>() {
                     @Override
                     public void onChanged(List<Note> notes) {
                         notesAdapter.setNotes(notes);
